@@ -1,0 +1,11 @@
+/* globals.css */
+
+body {
+    background-color: #212121; /* This matches your theme's background.default */
+    color: #ffffff; /* Ensure text color is set to your primary text color */
+}
+
+/* Ensure all other elements like html and main have the correct background color */
+html, main {
+    background-color: #212121; /* Apply the dark background */
+}

@@ -1,0 +1,62 @@
+.login_container{
+    background-image: url(https://img.freepik.com/free-photo/modern-futuristic-sci-fi-background_35913-2224.jpg?t=st=1724077289~exp=1724080889~hmac=0cb312ef0552d406d4dc0644488df1e4a80eb6a9163bdf1db64a21ce46715444&w=1800);
+    background-size: cover;
+    min-height: 92vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login_card{
+    background-color: rgba(47, 47, 47, 0.492);
+}
+
+.tabs{
+    background-color: #5002cf;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: space-between;
+    box-shadow: 0px 4px 6px rgba(0,0,0, 0.4)
+}
+
+.tab_active{
+    width: 100%;
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: white;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: bold;
+    line-height: 1.5;
+    padding: 8px 12px;
+    margin: 6px;
+    border: none;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    background-color: #fff;
+    color: #5002cf;
+}
+
+.tab_inactive{
+    width: 100%;
+    font-family: 'IBM Plex Sans', sans-serif;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: bold;
+    line-height: 1.5;
+    padding: 8px 12px;
+    margin: 6px;
+    border: none;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    background-color: transparent;
+    color: #fff;
+    
+    &:hover {
+        background-color: #7b3eff;
+      }
+}

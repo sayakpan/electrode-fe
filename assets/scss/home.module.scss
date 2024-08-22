@@ -1,0 +1,67 @@
+.home_container{
+    background-image: url('../images/bg4.jpg');
+    background-size: cover;
+    min-height: 92vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home_card{
+    background-color: rgba(47, 47, 47, 0.593);
+
+    h5{
+        color: #751fff;
+        font-weight: bold;
+    }
+}
+
+.tabs{
+    background-color: #5002cf;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: space-between;
+    box-shadow: 0px 4px 6px rgba(0,0,0, 0.4)
+}
+
+.tab_active{
+    width: 100%;
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: white;
+    cursor: pointer;
+    font-size: 0.975rem;
+    font-weight: bold;
+    line-height: 1.5;
+    padding: 8px 12px;
+    margin: 6px;
+    border: none;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    background-color: #fff;
+    color: #5002cf;
+}
+
+.tab_inactive{
+    width: 100%;
+    font-family: 'IBM Plex Sans', sans-serif;
+    cursor: pointer;
+    font-size: 0.975rem;
+    font-weight: bold;
+    line-height: 1.5;
+    padding: 8px 12px;
+    margin: 6px;
+    border: none;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    background-color: transparent;
+    color: #fff;
+    
+    &:hover {
+        background-color: #7b3eff;
+      }
+}

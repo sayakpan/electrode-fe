@@ -7,7 +7,8 @@ import ThemeProviderComponent from '../components/theme/ThemeProviderComponent';
 import { SnackbarProvider } from '../context/SnackbarContext';
 import RecoilContextProvider from "@/lib/recoilContextProvider";
 import { PrimeReactProvider } from 'primereact/api';
-import "primereact/resources/themes/mdc-dark-indigo/theme.css";
+import "primereact/resources/themes/arya-blue/theme.css";
+import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 
 const inter = Inter({ subsets: ["latin"] });

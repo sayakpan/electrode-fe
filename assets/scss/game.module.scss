@@ -22,27 +22,105 @@
 }
 
 .player_1{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     bottom: -80px;
     left: 50%;
     transform: translateX(-50%);
+
+    p{
+        margin-left: .5rem;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
 }
 .player_2{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     right: -80px;
     top: 50%;
     transform: translateY(-50%);
 }
 .player_3{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     top: -80px;
     left: 50%;
     transform: translateX(-50%);
+
+    p{
+        margin-left: .5rem;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
 }
 .player_4{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     left: -80px;
     top: 50%;
     transform: translateY(-50%);
 }
 
+.card_container{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.card_item{
+    margin: 0 .2rem;
+}
+
+.bid_container{
+    background-color: #000000b3;
+}
+
+.bid_cells{
+    border: 1px solid #751fff;
+    background-color: rgba(172, 121, 255, 0.179);
+    width: 52px;
+    padding: .5rem;
+    margin: .2rem;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.bid_cells:hover{
+    background-color: #580cd2;
+    color: white;
+}
+
+.pass_cell{
+    border: 1px solid #751fff;
+    background-color: rgba(172, 121, 255, 0.179);
+    width: 110px;
+    padding: .5rem;
+    margin: .2rem;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.pass_cell:hover{
+    background-color: #580cd2;
+    color: white;
+}

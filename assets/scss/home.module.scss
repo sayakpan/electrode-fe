@@ -65,3 +65,20 @@
         background-color: #7b3eff;
       }
 }
+
+.selected_game {
+    border: 2px solid #7b3eff;
+    border-radius: 10px;
+    padding: 2px;
+    box-shadow: 0 0 10px #7b3eff, 0 0 20px #7b3eff, 0 0 30px #7b3eff;
+    // animation: glowing 1.5s infinite alternate;
+}
+
+// @keyframes glowing {
+//     from {
+//         box-shadow: 0 0 5px #7b3eff, 0 0 10px #7b3eff, 0 0 15px #7b3eff;
+//     }
+//     to {
+//         box-shadow: 0 0 20px #7b3eff, 0 0 30px #7b3eff, 0 0 40px #7b3eff;
+//     }
+// }

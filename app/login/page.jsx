@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import axiosInstance from "@/plugins/axios";
 import { useSnackbar } from '../../context/SnackbarContext';
 import { useRecoilState } from 'recoil';
-import { userState } from "@/store/auth";
+import { userState, profileState } from "@/store/auth";
 import styles from "@/assets/scss/login.module.scss"
 import { InputText } from 'primereact/inputtext';
 import BoltIcon from "@mui/icons-material/Bolt";
@@ -15,6 +15,7 @@ import Box from "@mui/material/Box";
 
 const AuthPage = () => {
     const [user, setUser] = useRecoilState(userState);
+    const [profile, setProfile] = useRecoilState(profileState);
     const [activeTab, setActiveTab] = useState("login");
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -38,6 +39,7 @@ const AuthPage = () => {
                 localStorage.setItem("authToken", response.data.token);
                 localStorage.setItem("user", JSON.stringify(response.data.user)); // Make sure user is stored as a string
                 setUser(response.data.user);
+                setProfile(response.data.profile)
                 window.location.href = '/';
             }, 1000);
         } catch (error) {
@@ -60,6 +62,7 @@ const AuthPage = () => {
                 localStorage.setItem("authToken", response.data.token);
                 localStorage.setItem("user", JSON.stringify(response.data.user));
                 setUser(response.data.user);
+                setProfile(response.data.profile)
                 window.location.href = '/';
             }, 1000);
         } catch (error) {
@@ -80,7 +83,7 @@ const AuthPage = () => {
                             component="a"
                             onClick={() => {navigateToPage('/')}}
                             sx={{
-                                mr: 2,
+                                me: 1,
                                 display: "flex" ,
                                 fontFamily: "monospace",
                                 fontWeight: 700,

@@ -3,14 +3,16 @@ import { recoilPersist } from 'recoil-persist';
 
 const { persistAtom } = recoilPersist();
 
-export const userState = atom({
-    key: 'userState',
+export const instanceState = atom({
+    key: 'instance',
     default: null,
     effects_UNSTABLE: [persistAtom],
 });
 
-export const profileState = atom({
-    key: 'profileState',
+export const gameDataState = atom({
+    key: 'gameData',
     default: null,
     effects_UNSTABLE: [persistAtom],
 });
+
+

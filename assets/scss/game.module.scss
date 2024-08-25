@@ -1,0 +1,48 @@
+.game_container{
+    background-image: url('../images/bg4.jpg');
+    background-size: cover;
+    min-height: 92vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game_card{
+    position: relative;
+    background-color: rgba(47, 47, 47, 0.593);
+    min-width: 500px;
+    width: 1100px;
+    height: 450px;
+    color: white;
+
+    h5{
+        color: #751fff;
+        font-weight: bold;
+    }
+}
+
+.player_1{
+    position: absolute;
+    bottom: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.player_2{
+    position: absolute;
+    right: -80px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.player_3{
+    position: absolute;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.player_4{
+    position: absolute;
+    left: -80px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+

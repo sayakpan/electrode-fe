@@ -4,7 +4,8 @@ import React, { useEffect, useState, useCallback } from 'react'
 import styles from "@/assets/scss/game.module.scss"
 import { Avatar } from 'primereact/avatar';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { gameDataState, instanceState } from '@/store/gameplay';
+import { userState } from "@/store/auth";
+import { gameDataState, instanceState, biddingDataState } from '@/store/gameplay';
 import axiosInstance from '@/plugins/axios';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
@@ -16,29 +17,31 @@ import { Button } from 'primereact/button';
 
 
 const GameBoard = () => {
-    const [ isMounted, setIsMounted ] = useState(false);
+    const [ user, setUser ] = useRecoilState(userState);
     const [ gameData, setGameData ] = useRecoilState(gameDataState);
+    const [ biddingData, setBiddingData ] = useRecoilState(biddingDataState)
     const [ bidModalVisible, setBidModalVisible] = useState(false);
+    const [ othersBidding, setOthersBidding] = useState(false);
 
     const instance = useRecoilValue(instanceState);
-
-
-    useEffect(() => {
-        setIsMounted(true)
-        const token = localStorage.getItem("authToken")
-        if (!token) {
-            router.replace('login')
-        }
-    }, [])
 
     const getGameData = async () => {
         const response = await axiosInstance.get(`/api/twenty-nine/get-game/${instance.instance_id}`)
         setGameData(response.data)
     }
 
+    useEffect(() => {
+        if (biddingData.current_bidder.email === user.email) {
+            setBidModalVisible(true);
+        } else {
+            setOthersBidding(true);
+        }
+    }, [biddingData.current_bidder.email, user.email])
+
+
     return (
         <div className={styles.game_container}>
-            {isMounted && 
+            {
                 <div className="container d-flex justify-content-center align-items-center">
                     <div className={"card shadow-sm p-4 " + styles.game_card}>
                         <div>
@@ -66,11 +69,10 @@ const GameBoard = () => {
                         </div>
                         
                         <CardHolder cardInHand={gameData.player_cards.cards_in_hand}/>
-                        <Button label="Show" icon="pi pi-external-link" onClick={() => setBidModalVisible(true)} />
+                        {/* <Button label="Show" icon="pi pi-external-link" onClick={() => setBidModalVisible(true)} /> */}
                         <Dialog
                             visible={bidModalVisible} modal={false} onHide={() => {if (!bidModalVisible) return; setBidModalVisible(false); }}
-                            style={{ width: '23vw' }} 
-                            breakpoints={{ '960px': '75vw', '641px': '100vw' }}
+                            style={{ width: '330px' }} 
                             content={({ hide }) => (
                                 <div className={'d-flex flex-wrap p-3 ' + styles.bid_container}>
                                     {Array.from({ length: 13 }, (_, i) => (
@@ -81,6 +83,16 @@ const GameBoard = () => {
                                     <div className={styles.pass_cell}>
                                         Pass
                                     </div>
+                                </div>
+                            )}
+                            >
+                        </Dialog>
+                        <Dialog
+                            visible={othersBidding} modal={false} onHide={() => {if (!othersBidding) return; setBidModalVisible(false); }}
+                            style={{ width: '330px' }} 
+                            content={({ hide }) => (
+                                <div className={'d-flex flex-wrap p-3 ' + styles.bid_container}>
+                                    Others Are Bidding Now
                                 </div>
                             )}
                             >

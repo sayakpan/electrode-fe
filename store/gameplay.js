@@ -15,4 +15,10 @@ export const gameDataState = atom({
     effects_UNSTABLE: [persistAtom],
 });
 
+export const biddingDataState = atom({
+    key: 'biddingData',
+    default: null,
+    effects_UNSTABLE: [persistAtom],
+});
+
 

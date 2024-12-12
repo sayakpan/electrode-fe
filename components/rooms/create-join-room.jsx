@@ -24,13 +24,6 @@ const CreateJoinRoom = () => {
     const [ roomUniqueId, setRoomUniqueId ] = useState("")
     const [ passkey, setPassKey ] = useState("")
 
-    useEffect(() => {
-        setIsMounted(true)
-        const token = localStorage.getItem("authToken")
-        if (!token){
-            router.replace('login')
-        }
-    },[router])
 
     const handleCreateRoom = async () => {
         const payload = {

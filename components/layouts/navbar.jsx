@@ -30,6 +30,15 @@ function ResponsiveAppBar() {
     const [anchorElUser, setAnchorElUser] = useState(null);
 
     useEffect(() => {
+        const token = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('token='))
+            ?.split('=')[1];
+        if (!token){
+            setUser(null)
+            localStorage.removeItem("authToken")
+            localStorage.removeItem("user")
+        }
         setIsMounted(true)
         if (!user) {
             const storedUser = localStorage.getItem("user");
@@ -60,6 +69,7 @@ function ResponsiveAppBar() {
 
     const handleLogout = async (e) => {
         handleCloseUserMenu()
+        document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
         localStorage.removeItem("authToken")
         localStorage.removeItem("user")
         setUser(null);

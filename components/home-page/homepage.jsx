@@ -7,29 +7,36 @@ import { useRecoilState } from 'recoil'
 import { currentRoomState, roomStatusState } from '@/store/room'
 import VirtualRoom from '../rooms/virtual-room'
 import CreateJoinRoom from '../rooms/create-join-room'
+import { userState, profileState } from "@/store/auth";
+import axiosInstance from '@/plugins/axios'
+
 
 const HomePage = () => {
     const router = useRouter()
-    const [ isMounted, setIsMounted ] = useState(false);
     const [ currentRoom, setCurrentRoom ] = useRecoilState(currentRoomState)
     const [ roomStatus, setRoomStatus ] = useRecoilState(roomStatusState)
+    const [user, setUser] = useRecoilState(userState);
+    const [profile, setProfile] = useRecoilState(profileState);
 
 
     useEffect(() => {
-        setIsMounted(true)
-        const token = localStorage.getItem("authToken")
-        if (!token){
-            router.replace('login')
+        async function fetchData() {
+            if (!currentRoom) {
+                if(profile && profile.active_room_id){
+                    const activeRoomResponse = await axiosInstance.get(`/api/rooms/active/${profile.active_room_id}/`)
+                    setCurrentRoom(activeRoomResponse.data)
+                    setRoomStatus("joined")
+                } else {
+                    setRoomStatus('no_room')
+                }
+            }
         }
-
-        if (!currentRoom) {
-            setRoomStatus('no_room')
-        }
-    }, [currentRoom, router, setRoomStatus],)
+        fetchData();
+    }, [currentRoom, profile, profile.active_room_id, setCurrentRoom, setRoomStatus])
 
     return (
         <div className={styles.home_container}>
-            {isMounted && roomStatus === 'no_room' ? 
+            {roomStatus === 'no_room' ? 
                 (
                     <CreateJoinRoom />
                 ):( 

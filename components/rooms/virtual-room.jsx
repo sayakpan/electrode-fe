@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 import { useSnackbar } from '../../context/SnackbarContext';
 import { currentRoomState, roomStatusState } from '@/store/room'
 import { gameProfilesState, selectedGameState } from '@/store/games'
-import { instanceState } from '@/store/gameplay'
+import { instanceState, gameDataState, biddingDataState } from '@/store/gameplay'
 import PlayerItem from './player-item'
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
@@ -27,6 +27,8 @@ const VirtualRoom = () => {
     const [ gameProfiles, setGameProfiles ] = useRecoilState(gameProfilesState)
     const [ selectedGame, setSelectedGame ] = useRecoilState(selectedGameState)
     const [ instance, setInstance ] = useRecoilState(instanceState)
+    const [ gameData, setGameData ] = useRecoilState(gameDataState)
+    const [ biddingData, setBiddingData ] = useRecoilState(biddingDataState)
 
 
     const getAllGames = useCallback(async () => {
@@ -41,8 +43,11 @@ const VirtualRoom = () => {
             router.replace('login')
         } else {
             getAllGames()
+            if (currentRoom && currentRoom.is_playing) {
+                setSelectedGame(currentRoom.game_playing)
+            }
         }
-    }, [getAllGames, roomStatus, router])
+    }, [currentRoom, getAllGames, roomStatus, router, setSelectedGame])
 
     const handleRefresh = async () =>{
         const response = await axiosInstance.get(`/api/rooms/${currentRoom.unique_id}/?passkey=${currentRoom.passkey}`)
@@ -51,12 +56,29 @@ const VirtualRoom = () => {
     }
 
     const handleStartGame = async () => {
+        const playerIds = currentRoom.players.map(player => player.id);
+        if (playerIds.length < 4) {
+            openSnackbar(`Minimum 4 players required to start the game`,'error', 3000);
+            return
+        }
         const payload = {
             game_id: selectedGame,
+            order: playerIds,
         }
-        const response = await axiosInstance.post(`/api/twenty-nine/start/${currentRoom.unique_id}/`, payload)
+
+        let gameQuery;
+        if (currentRoom.is_playing) {
+            gameQuery =  axiosInstance.get(`/api/twenty-nine/get-instance/${currentRoom.unique_id}/`)
+        } else {
+            gameQuery =  axiosInstance.post(`/api/twenty-nine/start/${currentRoom.unique_id}/`, payload)
+        }
+        const response = await gameQuery
         setInstance(response.data)
-        console.log(response.data)
+        const instance_id = response.data.instance_id
+        const gameresponse = await axiosInstance.get(`/api/twenty-nine/get-game/${instance_id}/`)
+        setGameData(gameresponse.data)
+        const biddingData = await axiosInstance.post(`/api/twenty-nine/bid/${instance_id}/`)
+        setBiddingData(biddingData.data)
         router.push('/game')
     }
 
@@ -113,7 +135,7 @@ const VirtualRoom = () => {
                                 textTransform: 'none',
                             }}
                             onClick={() => {handleStartGame()}}
-                            >Start Game
+                            >{ currentRoom.is_playing ? 'Join Game' : 'Start Game'}
                         </Button>
                     </div>
                 </div>

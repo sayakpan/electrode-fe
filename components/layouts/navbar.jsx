@@ -19,11 +19,15 @@ import { useRouter } from "next/navigation";
 import { userState } from "@/store/auth";
 import { useRecoilState } from "recoil";
 import { Col, Row } from "react-bootstrap";
+import { currentRoomState, roomStatusState } from '@/store/room'
+
 
 
 function ResponsiveAppBar() {
     const [user, setUser] = useRecoilState(userState);
     const [isMounted, setIsMounted] = useState(false);
+    const [ currentRoom, setCurrentRoom ] = useRecoilState(currentRoomState)
+    const [ roomStatus, setRoomStatus ] = useRecoilState(roomStatusState)
     const router = useRouter()
 
     const [anchorElNav, setAnchorElNav] = useState(null);
@@ -32,11 +36,11 @@ function ResponsiveAppBar() {
     useEffect(() => {
         const token = document.cookie
             .split('; ')
-            .find(row => row.startsWith('token='))
+            .find(row => row.startsWith('token_electrode='))
             ?.split('=')[1];
         if (!token){
             setUser(null)
-            localStorage.removeItem("authToken")
+            localStorage.removeItem("token_electrode")
             localStorage.removeItem("user")
         }
         setIsMounted(true)
@@ -69,11 +73,14 @@ function ResponsiveAppBar() {
 
     const handleLogout = async (e) => {
         handleCloseUserMenu()
-        document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-        localStorage.removeItem("authToken")
+        document.cookie = "token_electrode=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+        localStorage.removeItem("token_electrode")
         localStorage.removeItem("user")
         setUser(null);
-        window.location.href = '/login'
+        setCurrentRoom(null)
+        setRoomStatus(null)
+        localStorage.clear()
+        router.replace('/');
     }
 
     return (

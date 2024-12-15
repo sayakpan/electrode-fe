@@ -32,9 +32,9 @@ const AuthPage = () => {
             const response = await axiosInstance.post("/api/accounts/login/", { email, password });
             const token = response.data.token;
         
-            document.cookie = `token=${token}; path=/; secure; samesite=strict`;
+            document.cookie = `token_electrode=${token}; path=/; secure; samesite=strict`;
 
-            localStorage.setItem("authToken", response.data.token);
+            localStorage.setItem("token_electrode", response.data.token);
             localStorage.setItem("user", JSON.stringify(response.data.user));
             setUser(response.data.user);
             setProfile(response.data.profile)
@@ -59,7 +59,7 @@ const AuthPage = () => {
             const token = response.data.token;
 
             document.cookie = `token=${token}; path=/; secure; samesite=strict`;
-            localStorage.setItem("authToken", response.data.token);
+            localStorage.setItem("token_electrode", response.data.token);
             localStorage.setItem("user", JSON.stringify(response.data.user));
             setUser(response.data.user);
             setProfile(response.data.profile)

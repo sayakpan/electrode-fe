@@ -1,19 +1,17 @@
 import { NextResponse } from "next/server";
 
 export function middleware(req) {
-    const token = req.cookies.get("token")?.value;
+    const token = req.cookies.get("token_electrode")?.value;
 
-    const protectedRoutes = ["/", "/profile", "/game"]; // Add all protected routes here
+    const protectedRoutes = ["/", "/profile", "/game"]; 
     const currentPath = req.nextUrl.pathname;
 
-    // If the route is protected and no token exists, redirect to login
     if (protectedRoutes.includes(currentPath) && !token) {
         const loginUrl = new URL("/login", req.url);
         console.log("not logged in")
         return NextResponse.redirect(loginUrl);
     }
 
-    // If logged in and trying to access login or register, redirect to dashboard
     if (currentPath === "/login" && token) {
         const homeUrl = new URL("/", req.url);
         console.log("logged in")

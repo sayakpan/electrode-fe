@@ -36,18 +36,22 @@ const VirtualRoom = () => {
         setGameProfiles(response.data)
     }, [setGameProfiles])
 
+
     useEffect(() => {
-        setIsMounted(true)
-        const token = localStorage.getItem("authToken")
+        const token = localStorage.getItem("token_electrode");
         if (!token) {
-            router.replace('login')
-        } else {
-            getAllGames()
-            if (currentRoom && currentRoom.is_playing) {
-                setSelectedGame(currentRoom.game_playing)
-            }
+            router.replace('/login');
+            return; 
         }
-    }, [currentRoom, getAllGames, roomStatus, router, setSelectedGame])
+    
+        setIsMounted(true);
+        getAllGames();
+    
+        if (currentRoom?.is_playing) {
+            setSelectedGame(currentRoom.game_playing);
+        }
+    }, [currentRoom, getAllGames, router, setSelectedGame]);
+
 
     const handleRefresh = async () =>{
         const response = await axiosInstance.get(`/api/rooms/${currentRoom.unique_id}/?passkey=${currentRoom.passkey}`)
@@ -84,7 +88,7 @@ const VirtualRoom = () => {
 
     return (
         <div className="container d-flex justify-content-center align-items-center">
-            {isMounted && 
+            {isMounted ?
                 <div className={"card shadow-sm p-4 " + styles.home_card} style={{ width: "100%", maxWidth: "800px" }}>
                     <div className={styles.tabs + " d-flex justify-content-between align-items-center mb-4 text-white fw-bold"} style={{height: "50px" }}>
                         <div className='mx-3 '>{currentRoom?.name}</div>
@@ -135,9 +139,12 @@ const VirtualRoom = () => {
                                 textTransform: 'none',
                             }}
                             onClick={() => {handleStartGame()}}
-                            >{ currentRoom.is_playing ? 'Join Game' : 'Start Game'}
+                            >{ currentRoom?.is_playing ? 'Join Game' : 'Start Game'}
                         </Button>
                     </div>
+                </div> : 
+                <div className="container d-flex justify-content-center align-items-center">
+                    <div className="text-center">Loading...</div>
                 </div>
             }
         </div>

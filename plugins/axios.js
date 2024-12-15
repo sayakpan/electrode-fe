@@ -8,7 +8,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
     (config) => {
         // Get the token from localStorage just before sending the request
-        const token = localStorage.getItem('authToken');
+        const token = localStorage.getItem('token_electrode');
         if (token) {
             config.headers['Authorization'] = `Token ${token}`;
         }

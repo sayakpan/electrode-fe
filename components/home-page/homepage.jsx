@@ -20,6 +20,11 @@ const HomePage = () => {
 
 
     useEffect(() => {
+        const token = localStorage.getItem("token_electrode");
+        if (!token) {
+            router.replace('/login');
+            return; 
+        }
         async function fetchData() {
             if (!currentRoom) {
                 if(profile && profile.active_room_id){
@@ -32,7 +37,7 @@ const HomePage = () => {
             }
         }
         fetchData();
-    }, [currentRoom, profile, profile.active_room_id, setCurrentRoom, setRoomStatus])
+    }, [currentRoom, profile, router, setCurrentRoom, setRoomStatus])
 
     return (
         <div className={styles.home_container}>

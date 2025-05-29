@@ -1,5 +1,5 @@
 # frontend/Dockerfile
-FROM node:22
+FROM node:22.16.0
 
 WORKDIR /app
 COPY . .

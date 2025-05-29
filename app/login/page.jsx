@@ -4,46 +4,48 @@ import React, { useEffect, useState } from "react";
 import axiosInstance from "@/plugins/axios";
 import { useSnackbar } from '../../context/SnackbarContext';
 import { useRecoilState } from 'recoil';
-import { userState } from "@/store/auth";
+import { userState, profileState } from "@/store/auth";
 import styles from "@/assets/scss/login.module.scss"
 import { InputText } from 'primereact/inputtext';
 import BoltIcon from "@mui/icons-material/Bolt";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 
 const AuthPage = () => {
     const [user, setUser] = useRecoilState(userState);
+    const [profile, setProfile] = useRecoilState(profileState);
     const [activeTab, setActiveTab] = useState("login");
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
     const { openSnackbar } = useSnackbar();
+    const router = useRouter();
 
-    useEffect(() => {
-        const token = localStorage.getItem("authToken")
-        if (token) {
-            window.location.href = '/'
-        }
-    })
 
-    // Login handler
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axiosInstance.post("api/accounts/login/", { email, password });
+            const response = await axiosInstance.post("/api/accounts/login/", { email, password });
+            const token = response.data.token;
+        
+            Cookies.set('Token', token, { expires: 1, path: '/', sameSite: 'Strict' });
+            localStorage.setItem("Token", token);
+            
+            localStorage.setItem("user", JSON.stringify(response.data.user));
+            setUser(response.data.user);
+            setProfile(response.data.profile)
+            router.replace("/");
+
             openSnackbar("Logged in successfully!", 'success', 3000);
-            setTimeout(() => {
-                localStorage.setItem("authToken", response.data.token);
-                localStorage.setItem("user", JSON.stringify(response.data.user)); // Make sure user is stored as a string
-                setUser(response.data.user);
-                window.location.href = '/';
-            }, 1000);
         } catch (error) {
             openSnackbar(`Error: ${error.response?.data?.error}`, 'error', 3000);
         }
-    };
+      };
 
     // Register handler
     const handleRegister = async (e) => {
@@ -55,16 +57,24 @@ const AuthPage = () => {
                 password: password,
             }
             const response = await axiosInstance.post("api/accounts/register/", payload);
+            const token = response.data.token;
+
+            Cookies.set('Token', token, { expires: 1 })
+            localStorage.setItem("Token", token);
+
+            localStorage.setItem("user", JSON.stringify(response.data.user));
+            setUser(response.data.user);
+            setProfile(response.data.profile)
+            window.location.href = '/';
+
             openSnackbar("User created successfully!", 'success', 3000);
-            setTimeout(() => {
-                localStorage.setItem("authToken", response.data.token);
-                localStorage.setItem("user", JSON.stringify(response.data.user));
-                setUser(response.data.user);
-                window.location.href = '/';
-            }, 1000);
         } catch (error) {
             openSnackbar(`Error: ${error.response?.data?.error}`, 'error', 3000);
         }
+    };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword((prevState) => !prevState);
     };
 
 
@@ -80,7 +90,7 @@ const AuthPage = () => {
                             component="a"
                             onClick={() => {navigateToPage('/')}}
                             sx={{
-                                mr: 2,
+                                me: 1,
                                 display: "flex" ,
                                 fontFamily: "monospace",
                                 fontWeight: 700,
@@ -114,9 +124,9 @@ const AuthPage = () => {
                                 <span className="p-inputgroup-addon">
                                     <i className="pi pi-key"></i>
                                 </span>
-                                <InputText value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" />
-                                <span className="p-inputgroup-addon">
-                                    <i className="pi pi-eye"></i>
+                                <InputText value={password} onChange={(e) => setPassword(e.target.value)} type={ showPassword ? "text" : "password"} placeholder="Password" />
+                                <span className="p-inputgroup-addon" style={{ cursor: "pointer" }} onClick={togglePasswordVisibility}>
+                                    <i className={`pi ${showPassword ? "pi-eye-slash" : "pi-eye"}`}></i>
                                 </span>
                             </div>
                             <Button type="submit" variant="contained" size="small" 
@@ -151,9 +161,9 @@ const AuthPage = () => {
                                 <span className="p-inputgroup-addon">
                                     <i className="pi pi-key"></i>
                                 </span>
-                                <InputText value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" />
-                                <span className="p-inputgroup-addon">
-                                    <i className="pi pi-eye"></i>
+                                <InputText value={password} onChange={(e) => setPassword(e.target.value)} type={ showPassword ? "text" : "password"} placeholder="Password" />
+                                <span className="p-inputgroup-addon" style={{ cursor: "pointer" }} onClick={togglePasswordVisibility}>
+                                    <i className={`pi ${showPassword ? "pi-eye-slash" : "pi-eye"}`}></i>
                                 </span>
                             </div>
                             {/* <button type="submit" className="btn btn-primary w-100">{activeTab === "login" ? "Sign In" : "Register"}</button> */}

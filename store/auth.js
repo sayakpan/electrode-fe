@@ -8,3 +8,9 @@ export const userState = atom({
     default: null,
     effects_UNSTABLE: [persistAtom],
 });
+
+export const profileState = atom({
+    key: 'profileState',
+    default: null,
+    effects_UNSTABLE: [persistAtom],
+});

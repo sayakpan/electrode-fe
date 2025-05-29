@@ -15,10 +15,10 @@ const PlayerItem = ({player}) => {
         <List sx={{ width: '100%' }}>
             <ListItem alignItems="flex-start">
                 <ListItemAvatar>
-                    <Avatar alt={player.first_name || 'Anonymous'} src="/static/images/avatar/1.jpg" />
+                    <Avatar alt={player.name || 'Anonymous'} src="/static/images/avatar/1.jpg" />
                 </ListItemAvatar>
                 <ListItemText
-                    primary={player.first_name || 'Anonymous'}
+                    primary={player.name || 'Anonymous'}
                     sx={{ color: "white", }}
                     secondary={
                         <React.Fragment>

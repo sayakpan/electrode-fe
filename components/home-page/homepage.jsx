@@ -9,7 +9,7 @@ import VirtualRoom from '../rooms/virtual-room'
 import CreateJoinRoom from '../rooms/create-join-room'
 import { userState, profileState } from "@/store/auth";
 import axiosInstance from '@/plugins/axios'
-
+import Cookies from 'js-cookie'
 
 const HomePage = () => {
     const router = useRouter()
@@ -20,7 +20,7 @@ const HomePage = () => {
 
 
     useEffect(() => {
-        const token = localStorage.getItem("token_electrode");
+        const token = Cookies.get("Token")
         if (!token) {
             router.replace('/login');
             return; 

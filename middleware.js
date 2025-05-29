@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
+import Cookies from "js-cookie";
 
 export function middleware(req) {
-    const token = req.cookies.get("token_electrode")?.value;
+    const token = req.cookies.get("Token")?.value;
 
     const protectedRoutes = ["/", "/profile", "/game"]; 
     const currentPath = req.nextUrl.pathname;

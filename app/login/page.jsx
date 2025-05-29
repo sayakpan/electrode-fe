@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 
 const AuthPage = () => {
@@ -32,9 +33,9 @@ const AuthPage = () => {
             const response = await axiosInstance.post("/api/accounts/login/", { email, password });
             const token = response.data.token;
         
-            document.cookie = `token_electrode=${token}; path=/; secure; samesite=strict`;
-
-            localStorage.setItem("token_electrode", response.data.token);
+            Cookies.set('Token', token, { expires: 1, path: '/', sameSite: 'Strict' });
+            localStorage.setItem("Token", token);
+            
             localStorage.setItem("user", JSON.stringify(response.data.user));
             setUser(response.data.user);
             setProfile(response.data.profile)
@@ -58,8 +59,9 @@ const AuthPage = () => {
             const response = await axiosInstance.post("api/accounts/register/", payload);
             const token = response.data.token;
 
-            document.cookie = `token=${token}; path=/; secure; samesite=strict`;
-            localStorage.setItem("token_electrode", response.data.token);
+            Cookies.set('Token', token, { expires: 1 })
+            localStorage.setItem("Token", token);
+
             localStorage.setItem("user", JSON.stringify(response.data.user));
             setUser(response.data.user);
             setProfile(response.data.profile)

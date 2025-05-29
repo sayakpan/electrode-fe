@@ -15,7 +15,8 @@ import IconButton from '@mui/material/IconButton';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import Image from 'next/image'
 import Button from '@mui/material/Button'  
-import FlagIcon from '@mui/icons-material/Flag';        
+import FlagIcon from '@mui/icons-material/Flag';   
+import Cookies from 'js-cookie'     
 
 
 const VirtualRoom = () => {
@@ -38,7 +39,7 @@ const VirtualRoom = () => {
 
 
     useEffect(() => {
-        const token = localStorage.getItem("token_electrode");
+        const token = Cookies.get("Token")
         if (!token) {
             router.replace('/login');
             return; 

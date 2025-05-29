@@ -10,16 +10,17 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import BoltIcon from "@mui/icons-material/Bolt";
+import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import { useRouter } from "next/navigation";
 import { userState } from "@/store/auth";
 import { useRecoilState } from "recoil";
 import { Col, Row } from "react-bootstrap";
 import { currentRoomState, roomStatusState } from '@/store/room'
+import Cookies from "js-cookie";
 
 
 
@@ -34,13 +35,10 @@ function ResponsiveAppBar() {
     const [anchorElUser, setAnchorElUser] = useState(null);
 
     useEffect(() => {
-        const token = document.cookie
-            .split('; ')
-            .find(row => row.startsWith('token_electrode='))
-            ?.split('=')[1];
+        const token = Cookies.get("Token")
         if (!token){
             setUser(null)
-            localStorage.removeItem("token_electrode")
+            localStorage.removeItem("Token")
             localStorage.removeItem("user")
         }
         setIsMounted(true)
@@ -73,8 +71,8 @@ function ResponsiveAppBar() {
 
     const handleLogout = async (e) => {
         handleCloseUserMenu()
-        document.cookie = "token_electrode=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-        localStorage.removeItem("token_electrode")
+        Cookies.remove("Token")
+        localStorage.removeItem("Token")
         localStorage.removeItem("user")
         setUser(null);
         setCurrentRoom(null)

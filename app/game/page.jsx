@@ -31,12 +31,12 @@ const GameBoard = () => {
     }
 
     useEffect(() => {
-        if (biddingData.current_bidder.email === user.email) {
+        if (biddingData?.current_bidder?.email === user?.email) {
             setBidModalVisible(true);
         } else {
             setOthersBidding(true);
         }
-    }, [biddingData.current_bidder.email, user.email])
+    }, [biddingData?.current_bidder?.email, user?.email])
 
 
     return (
@@ -53,22 +53,22 @@ const GameBoard = () => {
                         </div>
                         <div className={styles.player_1}>
                             <Avatar icon="pi pi-user" size="large" shape="circle" />
-                            <p>{gameData.team_info.your_profile.name}</p>
+                            <p>{gameData?.team_info?.your_profile.name}</p>
                         </div>
                         <div className={styles.player_2}>
                             <Avatar icon="pi pi-user" size="large" shape="circle" />
-                            <p>{gameData.team_info[gameData.team_info.opponent_team][0].name}</p>
+                            <p>{gameData?.team_info[gameData?.team_info?.opponent_team][0].name}</p>
                         </div>
                         <div className={styles.player_3}>
                             <Avatar icon="pi pi-user" size="large" shape="circle" />
-                            <p>{gameData.team_info[gameData.team_info.your_team].find(player => player.id !== gameData.team_info.your_profile.id).name}</p>
+                            <p>{gameData?.team_info[gameData?.team_info?.your_team].find(player => player.id !== gameData?.team_info?.your_profile.id).name}</p>
                         </div>
                         <div className={styles.player_4}>
                             <Avatar icon="pi pi-user" size="large" shape="circle" />
-                            <p>{gameData.team_info[gameData.team_info.opponent_team][1].name}</p>
+                            <p>{gameData?.team_info[gameData?.team_info?.opponent_team][1].name}</p>
                         </div>
                         
-                        <CardHolder cardInHand={gameData.player_cards.cards_in_hand}/>
+                        <CardHolder cardInHand={gameData?.player_cards.cards_in_hand}/>
                         {/* <Button label="Show" icon="pi pi-external-link" onClick={() => setBidModalVisible(true)} /> */}
                         <Dialog
                             visible={bidModalVisible} modal={false} onHide={() => {if (!bidModalVisible) return; setBidModalVisible(false); }}

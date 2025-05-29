@@ -6,7 +6,7 @@ import styles from '@/assets/scss/game.module.scss'
 const CardHolder = ({cardInHand}) => {
   return (
     <div className={styles.card_container}>
-        {cardInHand.map((card) => (
+        {cardInHand?.map((card) => (
             <CardItem key={card.code} card={card}/>
         ))}
     </div>

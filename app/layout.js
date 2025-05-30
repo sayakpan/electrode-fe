@@ -25,18 +25,16 @@ export default function RootLayout({ children }) {
                 <link rel="icon" href="/favicon.ico" />
             </head>
             <body className={inter.className}>
-                <StrictMode>
-                    <RecoilContextProvider>
-                        <ThemeProviderComponent>
-                            <PrimeReactProvider>
-                                <SnackbarProvider>
-                                    <MyNavbar /> {/* Add the navbar here */}
-                                    <main>{children}</main> {/* Wrap the children with main */}
-                                </SnackbarProvider>
-                            </PrimeReactProvider>
-                        </ThemeProviderComponent>
-                    </RecoilContextProvider>
-                </StrictMode>
+                <RecoilContextProvider>
+                    <ThemeProviderComponent>
+                        <PrimeReactProvider>
+                            <SnackbarProvider>
+                                <MyNavbar /> {/* Add the navbar here */}
+                                <main>{children}</main> {/* Wrap the children with main */}
+                            </SnackbarProvider>
+                        </PrimeReactProvider>
+                    </ThemeProviderComponent>
+                </RecoilContextProvider>
             </body>
         </html>
     );

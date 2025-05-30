@@ -113,7 +113,7 @@ const AuthPage = () => {
                     </div>
 
                     { activeTab === "login" ? (
-                        <form onSubmit={handleLogin}>
+                        <form onSubmit={() =>handleLogin}>
                             <div className="p-inputgroup flex-1">
                                 <span className="p-inputgroup-addon">
                                     <i className="pi pi-user"></i>
@@ -144,7 +144,7 @@ const AuthPage = () => {
                             >Log In
                             </Button>
                         </form>) :
-                        (<form onSubmit={handleRegister}>
+                        (<form onSubmit={() => handleRegister()}>
                             <div className="p-inputgroup flex-1">
                                 <span className="p-inputgroup-addon">
                                     <i className="pi pi-user"></i>

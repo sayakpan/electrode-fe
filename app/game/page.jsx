@@ -46,7 +46,7 @@ const GameBoard = () => {
                     <div className={"card shadow-sm p-4 " + styles.game_card}>
                         <div>
                             <Tooltip title="Refresh">
-                                <IconButton onClick={getGameData}>
+                                <IconButton onClick={() => getGameData()}>
                                     <AutorenewIcon />
                                 </IconButton>
                             </Tooltip>

@@ -153,7 +153,7 @@ function ResponsiveAppBar() {
                                             Profile
                                         </Typography>
                                     </MenuItem>
-                                    <MenuItem onClick={handleLogout}>
+                                    <MenuItem onClick={() => handleLogout()}>
                                         <Typography textAlign="center">
                                             Logout
                                         </Typography>

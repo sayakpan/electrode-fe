@@ -104,7 +104,7 @@ const VirtualRoom = () => {
                         </div>
                         <div className='text-white'>
                             <Tooltip title="Refresh">
-                                <IconButton onClick={handleRefresh}>
+                                <IconButton onClick={() => handleRefresh()}>
                                     <AutorenewIcon />
                                 </IconButton>
                             </Tooltip>
@@ -139,7 +139,7 @@ const VirtualRoom = () => {
                                 fontWeight: 'bold',
                                 textTransform: 'none',
                             }}
-                            onClick={() => {handleStartGame()}}
+                            onClick={() => {() => handleStartGame()}}
                             >{ currentRoom?.is_playing ? 'Join Game' : 'Start Game'}
                         </Button>
                     </div>

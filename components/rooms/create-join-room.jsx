@@ -85,7 +85,7 @@ const CreateJoinRoom = () => {
                                                 fontWeight: 'bold',
                                                 textTransform: 'none',
                                             }}
-                                            onClick={handleCreateRoom}
+                                            onClick={() => handleCreateRoom()}
                                         >Create
                                         </Button>
                                     </div>
@@ -116,7 +116,7 @@ const CreateJoinRoom = () => {
                                                 fontWeight: 'bold',
                                                 textTransform: 'none',
                                             }}
-                                            onClick={handleJoinRoom}
+                                            onClick={() => handleJoinRoom()}
                                         >Join
                                         </Button>
                                     </div>
